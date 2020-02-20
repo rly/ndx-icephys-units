@@ -1,0 +1,13 @@
+namespaces:
+- author:
+  - Ryan Ly
+  contact:
+  - rly@lbl.gov
+  doc: Table to hold detected spike times from intracellular ephys recordings
+  name: ndx-icephys-units
+  schema:
+  - namespace: core
+    neurodata_types:
+    - ElectricalSeries
+  - source: ndx-icephys-units.extensions.yaml
+  version: 0.1.0
