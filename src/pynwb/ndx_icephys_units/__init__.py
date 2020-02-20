@@ -20,3 +20,5 @@ if not os.path.exists(ndx_icephys_units_specpath):
 
 # Load the namespace
 load_namespaces(ndx_icephys_units_specpath)
+
+from .icephys_units import ICEphysUnits  # noqa: E402, F401

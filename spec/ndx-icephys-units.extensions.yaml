@@ -1,8 +1,83 @@
 groups:
-- neurodata_type_def: TetrodeSeries
-  neurodata_type_inc: ElectricalSeries
-  doc: An extension of ElectricalSeries to include the tetrode ID for each time series.
-  attributes:
-  - name: trode_id
-    dtype: int32
-    doc: The tetrode ID.
+- neurodata_type_def: ICEphysUnits
+  neurodata_type_inc: DynamicTable
+  doc: A DynamicTable to hold detected spike times from intracellular ephys recordings.
+  datasets:
+  - name: spike_times_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into the spike_times dataset.
+    quantity: '?'
+  - name: spike_times
+    neurodata_type_inc: VectorData
+    dtype: float64
+    doc: Spike times for each unit.
+    quantity: '?'
+    attributes:
+    - name: resolution
+      dtype: float64
+      doc: The smallest possible difference between two spike times. Usually 1 divided
+        by the acquisition sampling rate from which spike times were extracted, but
+        could be larger if the acquisition time series was downsampled or smaller
+        if the acquisition time series was smoothed/interpolated and it is possible
+        for the spike time to be between samples.
+      required: false
+  - name: obs_intervals_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into the obs_intervals dataset.
+    quantity: '?'
+  - name: obs_intervals
+    neurodata_type_inc: VectorData
+    dtype: float64
+    dims:
+    - num_intervals
+    - start|end
+    shape:
+    - null
+    - 2
+    doc: Observation intervals for each unit.
+    quantity: '?'
+  - name: electrode
+    neurodata_type_inc: VectorData
+    dtype:
+      target_type: IntracellularElectrode
+      reftype: object
+    doc: Electrode that each unit came from.
+    quantity: '?'
+  - name: waveform_mean
+    neurodata_type_inc: VectorData
+    dtype: float32
+    dims:
+    - num_units
+    - num_samples
+    shape:
+    - null
+    - null
+    doc: Spike waveform mean for each unit.
+    quantity: '?'
+    attributes:
+    - name: sampling_rate
+      dtype: float32
+      doc: Sampling rate, in hertz.
+    - name: unit
+      dtype: text
+      value: volts
+      doc: Unit of measurement. This value is fixed to 'volts'.
+  - name: waveform_sd
+    neurodata_type_inc: VectorData
+    dtype: float32
+    dims:
+    - num_units
+    - num_samples
+    shape:
+    - null
+    - null
+    doc: Spike waveform standard deviation for each unit.
+    quantity: '?'
+    attributes:
+    - name: sampling_rate
+      dtype: float32
+      doc: Sampling rate, in hertz.
+    - name: unit
+      dtype: text
+      value: volts
+      doc: Unit of measurement. This value is fixed to 'volts'.
